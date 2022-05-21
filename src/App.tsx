@@ -1,6 +1,10 @@
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import './App.css';
 import ResponsiveAppBar from './app/features/appBar/AppBar';
+import Dashboard from './app/features/dashboard/Dashboard';
+import PrivateRoute from './app/features/routes/PrivateRoute';
+import PersistLogin from './app/features/sessions/PersistLogin';
 
 
 
@@ -10,13 +14,23 @@ function App() {
 
     return (
         <div className="App">
-            <header className="App-header">
-                <ResponsiveAppBar />
-            </header>
+            <Router>
+                <header className="App-header">
+                    <ResponsiveAppBar />
+                </header>
 
-            <main>
-
-            </main>
+                <main>
+                    <Routes>
+                        <Route element={<PersistLogin />}>
+                            <Route path="/" element={
+                                <PrivateRoute>
+                                    <Dashboard />
+                                </PrivateRoute>
+                            } />
+                        </Route>
+                    </Routes>
+                </main>
+            </Router>
         </div>
     );
 }
