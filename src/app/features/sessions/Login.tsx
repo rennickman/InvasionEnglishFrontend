@@ -69,7 +69,7 @@ function Login() {
         console.log(response);
 
         // Check for errors - Route to homepage if none
-        if (errorMessages.length > 0) {
+        if (errorMessages.length === 0) {
             navigate("/");
         } else {
             return setErrors(errorMessages);
@@ -105,10 +105,12 @@ function Login() {
                 <Card sx={{ boxShadow: 1, maxWidth: 'md'}}>
                     <CardContent>
                         <Container maxWidth="sm">
+                            {/** Header */}
                             <Typography variant="h2" color="text.primary" gutterBottom>
                                 Login
                             </Typography>
 
+                            {/** Errors */}
                             {errors.length > 0 ? 
                                 <Alert severity="error" aria-live="assertive">
                                     {errors.map((error, index) => {
@@ -120,20 +122,23 @@ function Login() {
                             : <></>}
 
                             <form onSubmit={handleSubmit}>
+                                {/** Email Input */}
                                 <FormGroup row={true} id="email-group" sx={{marginTop: "1em"}}>
                                     <FormControl fullWidth>
                                         <InputLabel required htmlFor="email" id="email-label">Email Address</InputLabel>
                                         <Input id="email" type="email" inputRef={emailRef} />
                                     </FormControl>
                                 </FormGroup>
-
+                                
+                                {/** Password Input */}
                                 <FormGroup row={true} id="password-group" sx={{ marginTop: "1em" }}>
                                     <FormControl fullWidth>
                                         <InputLabel required htmlFor="password" id="password-label">Password</InputLabel>
                                         {passwordInput}
                                     </FormControl>
                                 </FormGroup>
-
+                                
+                                {/** Log In Button */}
                                 <FormGroup row={true} id="submit-group" sx={{ marginTop: "1em" }}>
                                     <FormControl fullWidth>
                                         <Button 
@@ -152,10 +157,12 @@ function Login() {
 
                     <CardActions sx={{ marginTop: "1em", justifyContent: "center" }} disableSpacing>
                         <Box>
+                            {/** Forgot Password Link */}
                             <Typography variant="body2" color="text.secondary" align="center">
                                 <Link to="/forgot-password">Forgot Password?</Link>
                             </Typography>
 
+                            {/** Link to Registration Page */}
                             <Link to="/signup">Create an Account!</Link>
                         </Box>
                     </CardActions>
