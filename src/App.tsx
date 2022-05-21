@@ -1,58 +1,74 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './app/features/counter/Counter';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 import './App.css';
+import ResponsiveAppBar from './app/features/appBar/AppBar';
+import Dashboard from './app/features/dashboard/Dashboard';
+import PrivateRoute from './app/features/routes/PrivateRoute';
+import PersistLogin from './app/features/sessions/PersistLogin';
+import Logout from './app/features/sessions/Logout';
+import UpdateProfile from './app/features/sessions/UpdateProfile';
+import Login from './app/features/sessions/Login';
+import Signup from './app/features/sessions/Signup';
+import PublicOnlyRoute from './app/features/routes/PublicOnlyRoute';
+
+
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
-  );
+
+
+    return (
+        <div className="App">
+            <Router>
+                <header className="App-header">
+                    <ResponsiveAppBar />
+                </header>
+
+                <main>
+                    <Routes>
+                        <Route element={<PersistLogin />}>
+                            {/** Home Page Route */}
+                            <Route path="/" element={
+                                <PrivateRoute>
+                                    <Dashboard />
+                                </PrivateRoute>
+                            } />
+
+                            {/** Logout Page Route */}
+                            <Route path="/logout" element={
+                                <PrivateRoute>
+                                    <Logout />
+                                </PrivateRoute>
+                            } />
+
+                            {/** Update Profile Page Route */}
+                            <Route path="/update-profile" element={
+                                <PrivateRoute>
+                                    <UpdateProfile />
+                                </PrivateRoute>
+                            } />
+
+                            {/** Login Page Route */}
+                            <Route path="/login" element={
+                                <PublicOnlyRoute>
+                                    <Login />
+                                </PublicOnlyRoute>
+                            } />
+
+                            {/** Registration Page Route */}
+                            <Route path="/signup" element={
+                                <PublicOnlyRoute>
+                                    <Signup />
+                                </PublicOnlyRoute>
+                            } />
+                        </Route>
+                    </Routes>
+                </main>
+            </Router>
+        </div>
+    );
 }
+
+
 
 export default App;
